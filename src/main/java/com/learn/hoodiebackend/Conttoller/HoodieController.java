@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 class HoodieInput {
@@ -24,9 +25,11 @@ class HoodieInput {
 
 @RestController
 @RequestMapping("/hoodie")
+@CrossOrigin(origins = "http://localhost:5173")
 public class HoodieController {
     @Autowired
-    HoodieService hoodieService;
+    public HoodieController(HoodieService hoodieService){this.hoodieService =  hoodieService;}
+    private final HoodieService hoodieService;
 
     @PostMapping("/Add")
     public void AddHoodie(@RequestBody HoodieInput hoodieInput){
@@ -45,6 +48,11 @@ public class HoodieController {
         );
 
         hoodieService.AddHoodie(hoodie, hoodieInput.getImgUrls());
+    }
+
+    @GetMapping("/showAllProducts")
+    public List<Hoodie> showAllProducts(){
+        return hoodieService.showAllProducts();
     }
 
     @DeleteMapping("Delete/{id}")

@@ -7,8 +7,11 @@ import com.learn.hoodiebackend.Repo.HoodieRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class HoodieService {
+
     @Autowired
     private HoodieRepo hoodieRepo;
 
@@ -23,6 +26,10 @@ public class HoodieService {
             HoodieImages hoodieImages = new HoodieImages( 0, hid, url);
             hoodieImagesRepo.save(hoodieImages);
         }
+    }
+
+    public List<Hoodie> showAllProducts(){
+        return hoodieRepo.findAll();
     }
 
     public void DeleteHoodie(long id) {

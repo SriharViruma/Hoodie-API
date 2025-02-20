@@ -4,14 +4,16 @@ package com.learn.hoodiebackend.Conttoller;
 import com.learn.hoodiebackend.Model.User;
 import com.learn.hoodiebackend.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/users")
+@CrossOrigin(origins = "http://localhost:5173")
 public class UserController {
 
     private final UserService userService;
@@ -37,13 +39,15 @@ public class UserController {
 
     //Login
     @PostMapping("/login")
-    public ResponseEntity<Integer> Login(@RequestParam String email,@RequestParam String password){
+    public ResponseEntity<Integer> Login(@RequestBody Map<String,String> loginReq){
+        String email = loginReq.get("email");
+        String password = loginReq.get("password");
         String res = userService.login(email,password);
-        System.out.println("in controller"+email);
+        System.out.println(email+":"+password);
         if (res.equals("200")){
             return ResponseEntity.ok(200);
         }else
-            return ResponseEntity.ok(404);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(404);
     }
 
     //sign in
