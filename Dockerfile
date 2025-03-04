@@ -1,5 +1,8 @@
-# Use an official Maven image to build the project
-FROM eclipse-temurin:21-jdk AS build
+# Use OpenJDK 21 as base image
+FROM eclipse-temurin:21-jdk-jammy AS build
+
+# Install Maven manually
+RUN apt-get update && apt-get install -y maven
 
 # Set working directory
 WORKDIR /app
@@ -7,20 +10,19 @@ WORKDIR /app
 # Copy project files
 COPY . .
 
-# Build the application (skip tests for faster build)
+# Verify Maven installation
+RUN mvn -version
+
+# Build the application
 RUN mvn clean package -DskipTests
 
-# Use a lightweight JDK image for running the app
-FROM openjdk:17-jdk-slim
+# Use a runtime image with Java 21
+FROM eclipse-temurin:21-jdk-jammy
 
-# Set working directory
 WORKDIR /app
 
-# Copy the JAR file from the build stage
 COPY --from=build /app/target/*.jar app.jar
 
-# Expose the default Spring Boot port
 EXPOSE 8080
 
-# Run the Spring Boot application
 CMD ["java", "-jar", "app.jar"]
