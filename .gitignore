@@ -31,3 +31,5 @@ build/
 
 ### VS Code ###
 .vscode/
+/src/main/resources/META-INF/MANIFEST.MF
+/out/artifacts/Hoodie_Backend_jar/Hoodie-Backend.jar
