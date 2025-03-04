@@ -52,8 +52,7 @@ public class UserController {
 
     //sign in
     @PostMapping("/signing")
-    public ResponseEntity<Integer> signing(@RequestBody User user){
-       userService.signing(user);
-       return ResponseEntity.ok(200);
+    public ResponseEntity<String> signing(@RequestBody User user){
+        return userService.signing(user);
     }
 }

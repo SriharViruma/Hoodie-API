@@ -1,27 +1,14 @@
 package com.learn.hoodiebackend.Conttoller;
 
+import com.learn.hoodiebackend.Model.HoodieImages;
 import com.learn.hoodiebackend.Model.Hoodie;
+import com.learn.hoodiebackend.Model.HoodieInput;
 import com.learn.hoodiebackend.Service.HoodieService;
-import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
-@Data
-class HoodieInput {
-    private long id;
-
-    private String name;
-    private String description;
-    private double price;
-    private String size;
-    private String color;
-    private double offerPrice;
-    private int stockQuantity;
-    private String[] imgUrls;
-}
 
 @RestController
 @RequestMapping("/hoodie")
@@ -30,6 +17,7 @@ public class HoodieController {
     @Autowired
     public HoodieController(HoodieService hoodieService){this.hoodieService =  hoodieService;}
     private final HoodieService hoodieService;
+
 
     @PostMapping("/Add")
     public void AddHoodie(@RequestBody HoodieInput hoodieInput){
@@ -54,7 +42,10 @@ public class HoodieController {
     public List<Hoodie> showAllProducts(){
         return hoodieService.showAllProducts();
     }
-
+    @GetMapping("/showImages")
+    public List<HoodieImages> showImages(){
+        return hoodieService.showimages();
+    }
     @DeleteMapping("Delete/{id}")
     public void DeleteHoodie(@PathVariable long id){
         hoodieService.DeleteHoodie(id);

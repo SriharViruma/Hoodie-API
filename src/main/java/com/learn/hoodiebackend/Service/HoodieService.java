@@ -31,6 +31,10 @@ public class HoodieService {
     public List<Hoodie> showAllProducts(){
         return hoodieRepo.findAll();
     }
+    public List<HoodieImages> showimages(){
+        return hoodieImagesRepo.findAll();
+    }
+
 
     public void DeleteHoodie(long id) {
         hoodieRepo.deleteById(id);
